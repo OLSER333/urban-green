@@ -1,0 +1,62 @@
+@use "scss/global" as *;
+
+/* Example include fonts from local file */
+// @include font-face("TTHoves", "../../fonts/some-path", normal);
+
+$text-colors: (
+  "white": $white,
+  "black": $black,
+);
+
+.text {
+  color: map-get($text-colors, "black");
+  font-style: normal;
+
+  &_size {
+    &_h1 {
+    }
+
+    &_h2 {
+    }
+
+    &_main {
+    }
+
+    &_desc {
+    }
+  }
+
+  &_weight {
+    &_light {
+      font-weight: 300;
+    }
+
+    &_normal {
+      font-weight: 400;
+    }
+
+    &_medium {
+      font-weight: 500;
+    }
+
+    &_semi-bold {
+      font-weight: 600;
+    }
+
+    &_bold {
+      font-weight: 700;
+    }
+  }
+
+  &_uppercase {
+    text-transform: uppercase;
+  }
+
+  &_color {
+    @each $color, $val in $text-colors {
+      &_#{$color} {
+        color: $val;
+      }
+    }
+  }
+}

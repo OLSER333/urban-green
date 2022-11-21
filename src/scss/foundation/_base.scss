@@ -1,0 +1,22 @@
+@use "scss/global" as *;
+
+html {
+  background-color: $white;
+  font-family: $fontMain;
+}
+
+main {
+  overflow-x: hidden;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.main-padding {
+  padding-left: $size-40;
+  padding-right: $size-40;
+}
+
+.section-margin-top {
+}

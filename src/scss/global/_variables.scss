@@ -1,0 +1,51 @@
+// colors
+$white: #fff;
+$black: #000;
+
+// fonts
+$fontMain: Arial, sans-serif;
+
+//base
+$base-x: 4px;
+
+// font-size
+$font-size-4: $base-x;
+$font-size-8: 2 * $base-x;
+$font-size-12: 3 * $base-x;
+$font-size-16: 4 * $base-x;
+
+// size
+$size-4: $base-x;
+$size-8: 2 * $base-x;
+$size-12: 3 * $base-x;
+$size-16: 4 * $base-x;
+$size-20: 5 * $base-x;
+$size-24: 6 * $base-x;
+$size-28: 7 * $base-x;
+$size-32: 8 * $base-x;
+$size-36: 9 * $base-x;
+$size-40: 10 * $base-x;
+$size-44: 11 * $base-x;
+$size-48: 12 * $base-x;
+$size-52: 13 * $base-x;
+$size-56: 14 * $base-x;
+$size-60: 15 * $base-x;
+$size-64: 16 * $base-x;
+$size-68: 17 * $base-x;
+$size-72: 18 * $base-x;
+$size-76: 19 * $base-x;
+$size-80: 20 * $base-x;
+
+// media
+$desktop-xlg-width: 1920px;
+$desktop-lg-width: 1600px;
+$desktop-md-width: 1440px;
+$desktop-sm-width: 1280px;
+$tablet-lg-width: 1024px;
+$tablet-sm-width: 768px;
+$phone-width: 600px;
+
+//z-index
+$z-index-modal: 2000;
+$z-index-header: 1000;
+$z-index-burger: 100;
