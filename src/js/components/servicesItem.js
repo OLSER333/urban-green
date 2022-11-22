@@ -29,7 +29,7 @@ export function hintWork() {
         //   e.pageX - hint.offsetWidth - 10
         // }px)`;
         hint.style.top = e.pageY - hintW + "px";
-        hint.style.left = e.pageX - hint.offsetWidth - 10 + "px";
+        hint.style.left = e.pageX - hintW - 10 + "px";
       }
     });
   }
