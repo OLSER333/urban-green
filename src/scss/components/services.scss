@@ -1,0 +1,6 @@
+.services {
+  padding: 25px;
+  @media (max-width:$tablet-sm-width) {
+    padding: 0;
+  }
+}

@@ -1,3 +1,4 @@
+@import 'variables';
 @mixin font-face($font-family, $file-path, $weight: normal, $style: normal) {
   @font-face {
     font-family: $font-family;
@@ -6,13 +7,15 @@
     font-display: swap;
 
     src: url("#{$file-path}.woff") format("woff"),
-    url("#{$file-path}.woff") format("woff2");
+    url("#{$file-path}.woff") format("woff2"),
+    //url("#{$file-path}.otf") format("otf")
   }
 }
 
 @mixin font-size($font-size: 12px) {
   font-size: $font-size;
 
+  // bp-large miss in _variables
   @media (min-width: $bp-large) {
     font-size: #{get-vw($font-size, $bp-large)};
   }

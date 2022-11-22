@@ -1,7 +1,10 @@
-@use "scss/global" as *;
+@use "src/scss/global" as *;
 
 /* Example include fonts from local file */
 // @include font-face("TTHoves", "../../fonts/some-path", normal);
+@include font-face("Mabry Pro", "../../fonts/MabryPro-Regular", normal);
+@include font-face("Nominee-MediumExtended", "../../fonts/nomine-woff", normal);
+
 
 $text-colors: (
   "white": $white,
