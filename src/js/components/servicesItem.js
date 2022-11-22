@@ -1,3 +1,92 @@
+// const forMouseOn = document.querySelector('.forMouseOn')
+// forMouseOn.onr
+
+const getCoordinatesOfTargetCenter = (target) => {
+  const rect = target.getBoundingClientRect();
+  const withoutScale = target.dataset.pointer !== "without-scale";
+  return {
+    x: rect.x + rect.width * 0.5,
+    y: rect.y + rect.height * 0.5,
+    target,
+    scale: withoutScale,
+  };
+};
+
+export const useCursor = () => {
+  const cursorWrapperRef = document.querySelector(".cursorWrapperRef");
+  const cursorScaleWrapperRef = document.querySelector(
+    ".cursorScaleWrapperRef"
+  );
+  const cursorRef = document.querySelector(".cursorRef");
+
+  let requestRef;
+  let coordinates = { x: 0, y: 0 };
+  let withoutAnimation = true;
+
+  // useEffect(() => {
+  let windowWidth = window.innerWidth;
+
+  window.addEventListener("resize", () => {
+    windowWidth = window.innerWidth;
+  });
+
+  const animate = () => {
+    const x = cursorWrapperRef.getBoundingClientRect().x;
+    const y = cursorWrapperRef.getBoundingClientRect().y;
+    const diffX = x - coordinates.x;
+    const diffY = y - coordinates.y;
+    const rubberCoef = 10;
+
+    const scale = (Math.abs(diffX) + Math.abs(diffY)) / windowWidth;
+    const deg = Math.atan((y - coordinates.y) / (x - coordinates.x)) * 57;
+
+    const newX = withoutAnimation ? coordinates.x : x - diffX / rubberCoef;
+    const newY = withoutAnimation ? coordinates.y : y - diffY / rubberCoef;
+
+    cursorScaleWrapperRef.style.transform = `scale(${
+      coordinates.scale ? 0.375 : 1
+    })`;
+
+    cursorWrapperRef.style.transform = `translate(calc(${newX}px), calc(${newY}px ))`;
+    cursorRef.style.transform = `rotate(${deg}deg) scaleY(${
+      1 - scale
+    }) scaleX(${1 + scale})`;
+
+    withoutAnimation = false;
+    requestRef = requestAnimationFrame(animate);
+  };
+
+  requestRef = requestAnimationFrame(animate);
+
+  // return () => cancelAnimationFrame(requestRef.current);
+  // }, []);
+
+  const handleCursorMove = (e) => {
+    const isSticky = e.target.hasAttribute("data-pointer");
+
+    if (isSticky) {
+      coordinates = getCoordinatesOfTargetCenter(e.target);
+    } else {
+      coordinates = { x: e.clientX, y: e.clientY };
+    }
+    cursorWrapperRef.style.opacity = 1;
+  };
+
+  const handleCursorLeave = () => {
+    cursorWrapperRef.style.opacity = 0;
+  };
+
+  const handleCursorEnter = () => {
+    console.log("cur enter");
+    withoutAnimation = true;
+  };
+
+  return { handleCursorMove, handleCursorLeave, handleCursorEnter };
+};
+
+//==================================================================
+//==================================================================
+/*
 export function hintWork() {
   const hintW = 100;
   const hints = document.querySelectorAll(".services__hint");
@@ -34,3 +123,5 @@ export function hintWork() {
     });
   }
 }
+
+ */

@@ -1,3 +1,44 @@
+.component {
+  width: 100%;
+  height: 100vh;
+  border: 1px solid rebeccapurple;
+  background: rgba(39, 39, 39, 0.67);
+}
+
+.SliderCursorWrapper {
+  position: fixed;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.SliderCursorScaleWrapper {
+  transition: transform 0.3s;
+}
+
+.scaleFocused {
+  transform: scale(0.3);
+}
+
+.SliderCursor {
+  min-width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+
+
+
+/*
 @import '../global/variables';
 
 .services__list-item {
@@ -87,3 +128,5 @@
   will-change: transform;
   pointer-events: none;
 }
+
+ */
