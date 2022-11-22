@@ -84,5 +84,6 @@
   z-index: 100; // выше итемов
   //transition: scale 0.3s ease;
   transition: all 0.3s ease;
-
+  will-change: transform;
+  pointer-events: none;
 }
