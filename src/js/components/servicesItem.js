@@ -12,77 +12,80 @@ const getCoordinatesOfTargetCenter = (target) => {
   };
 };
 
-export const useCursor = () => {
-  const cursorWrapperRef = document.querySelector(".cursorWrapperRef");
-  const cursorScaleWrapperRef = document.querySelector(
-    ".cursorScaleWrapperRef"
-  );
-  const cursorRef = document.querySelector(".cursorRef");
+// export const useCursor = () => {
+const cursorWrapperRef = document.querySelector(".cursorWrapperRef");
+const cursorScaleWrapperRef = document.querySelector(".cursorScaleWrapperRef");
+const cursorRef = document.querySelector(".cursorRef");
 
-  let requestRef;
-  let coordinates = { x: 0, y: 0 };
-  let withoutAnimation = true;
+let requestRef;
+let coordinates = { x: 0, y: 0 };
+let withoutAnimation = true;
 
-  // useEffect(() => {
-  let windowWidth = window.innerWidth;
+// useEffect(() => {
+let windowWidth = window.innerWidth;
 
-  window.addEventListener("resize", () => {
-    windowWidth = window.innerWidth;
-  });
+window.addEventListener("resize", () => {
+  windowWidth = window.innerWidth;
+});
 
-  const animate = () => {
-    const x = cursorWrapperRef.getBoundingClientRect().x;
-    const y = cursorWrapperRef.getBoundingClientRect().y;
-    const diffX = x - coordinates.x;
-    const diffY = y - coordinates.y;
-    const rubberCoef = 10;
+const animate = () => {
+  const x = cursorWrapperRef.getBoundingClientRect().x;
+  const y = cursorWrapperRef.getBoundingClientRect().y;
+  const diffX = x - coordinates.x;
+  const diffY = y - coordinates.y;
+  const rubberCoef = 10;
 
-    const scale = (Math.abs(diffX) + Math.abs(diffY)) / windowWidth;
-    const deg = Math.atan((y - coordinates.y) / (x - coordinates.x)) * 57;
+  const scale = (Math.abs(diffX) + Math.abs(diffY)) / windowWidth;
+  const deg = Math.atan((y - coordinates.y) / (x - coordinates.x)) * 57;
 
-    const newX = withoutAnimation ? coordinates.x : x - diffX / rubberCoef;
-    const newY = withoutAnimation ? coordinates.y : y - diffY / rubberCoef;
+  const newX = withoutAnimation ? coordinates.x : x - diffX / rubberCoef;
+  const newY = withoutAnimation ? coordinates.y : y - diffY / rubberCoef;
 
-    cursorScaleWrapperRef.style.transform = `scale(${
-      coordinates.scale ? 0.375 : 1
-    })`;
+  cursorScaleWrapperRef.style.transform = `scale(${
+    coordinates.scale ? 0.375 : 1
+  })`;
 
-    cursorWrapperRef.style.transform = `translate(calc(${newX}px), calc(${newY}px ))`;
-    cursorRef.style.transform = `rotate(${deg}deg) scaleY(${
-      1 - scale
-    }) scaleX(${1 + scale})`;
+  cursorWrapperRef.style.transform = `translate(calc(${newX}px), calc(${newY}px ))`;
+  cursorRef.style.transform = `rotate(${deg}deg) scaleY(${1 - scale}) scaleX(${
+    1 + scale
+  })`;
 
-    withoutAnimation = false;
-    requestRef = requestAnimationFrame(animate);
-  };
-
+  withoutAnimation = false;
   requestRef = requestAnimationFrame(animate);
-
-  // return () => cancelAnimationFrame(requestRef.current);
-  // }, []);
-
-  const handleCursorMove = (e) => {
-    const isSticky = e.target.hasAttribute("data-pointer");
-
-    if (isSticky) {
-      coordinates = getCoordinatesOfTargetCenter(e.target);
-    } else {
-      coordinates = { x: e.clientX, y: e.clientY };
-    }
-    cursorWrapperRef.style.opacity = 1;
-  };
-
-  const handleCursorLeave = () => {
-    cursorWrapperRef.style.opacity = 0;
-  };
-
-  const handleCursorEnter = () => {
-    console.log("cur enter");
-    withoutAnimation = true;
-  };
-
-  return { handleCursorMove, handleCursorLeave, handleCursorEnter };
 };
+
+requestRef = requestAnimationFrame(animate);
+
+// return () => cancelAnimationFrame(requestRef.current);
+// }, []);
+
+export const handleCursorMove = (e) => {
+  // console.log(e); // ???
+  const isSticky = e.target.hasAttribute("data-pointer");
+
+  if (isSticky) {
+    coordinates = getCoordinatesOfTargetCenter(e.target);
+  } else {
+    coordinates = { x: e.clientX, y: e.clientY };
+  }
+  cursorWrapperRef.style.opacity = 1;
+};
+
+export const handleCursorLeave = () => {
+  cursorWrapperRef.style.opacity = 0;
+};
+
+export const handleCursorEnter = () => {
+  withoutAnimation = true;
+};
+
+const forMouseOn = document.querySelector(".forMouseOn");
+forMouseOn.addEventListener("mouseenter", (e) => handleCursorEnter(e));
+forMouseOn.addEventListener("mouseleave", (e) => handleCursorLeave(e));
+forMouseOn.addEventListener("mousemove", (e) => handleCursorMove(e));
+
+// return { handleCursorMove, handleCursorLeave, handleCursorEnter };
+// };
 
 //==================================================================
 //==================================================================

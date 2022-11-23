@@ -1,41 +1,42 @@
-<!--// eslint-disable-next-line react/display-name-->
-<!--export const withCursor = (Component) => (props) => {-->
-<!--const cursorWrapperRef = useRef();-->
-<!--const cursorScaleWrapperRef = useRef();-->
-<!--const cursorRef = useRef();-->
 
-<!--const { handleCursorMove, handleCursorLeave, handleCursorEnter } = useCursor(-->
-<!--cursorWrapperRef,-->
-<!--cursorScaleWrapperRef,-->
-<!--cursorRef-->
-<!--);-->
-
-<div
-  onmouseleave="handleCursorLeave()"
-  onmouseenter="handleCursorEnter()"
-  onmousemove="handleCursorMove()"
-  class="forMouseOn"
->
+<div class="forMouseOn">
   <div class="cursorWrapperRef">
     <div class="cursorScaleWrapperRef">
-      <div class="cursorRef">123
-      </div>
+      <div class="cursorRef"></div>
     </div>
   </div>
-  <div class="component">Component</div>
-  <!--  <Component {...props} />-->
+  {{>divider}}
+  <li>
+    <a href="#" class="services__list-item">
+      <p class="services__item-title">Проектирование</p>
+      <span class="services__item-more">подробнее</span>
+      <span class="services__item-more_mb">+</span>
+      <div class="services__hint"></div>
+    </a>
+  </li>
+  {{>divider}}
+  <li>
+    <a href="#" class="services__list-item">
+      <p class="services__item-title">Проектирование</p>
+      <span class="services__item-more">подробнее</span>
+      <span class="services__item-more_mb">+</span>
+      <div class="services__hint"></div>
+    </a>
+  </li>
+  {{>divider}}
+  <li>
+    <a href="#" class="services__list-item">
+      <p class="services__item-title">Проектирование</p>
+      <span class="services__item-more">подробнее</span>
+      <span class="services__item-more_mb">+</span>
+      <div class="services__hint"></div>
+    </a>
+  </li>
 </div>
 
+
 <!--//==================================================================-->
-{{!>divider}}
-<!--<li>-->
-<!--  <a href="#" class="services__list-item">-->
-<!--    <p class="services__item-title">Проектирование</p>-->
-<!--    <span class="services__item-more">подробнее</span>-->
-<!--    <span class="services__item-more_mb">+</span>-->
-<!--    <div class="services__hint"></div>-->
-<!--  </a>-->
-<!--</li>-->
+
 {{!>divider}}
 <!--<li>-->
 <!--  <a href="#" class="services__list-item">-->
