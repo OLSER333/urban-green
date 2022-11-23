@@ -28,6 +28,9 @@
   @media (max-width:$tablet-sm-width) {
     display: none;
   }
+  @media  (hover:none) {
+    display: none;
+  }
 }
 
 
@@ -79,6 +82,7 @@
   @media (max-width: $phone-width) {
     display: none;
   }
+
 }
 
 .services__item-more_mb {
