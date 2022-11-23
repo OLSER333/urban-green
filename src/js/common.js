@@ -1,15 +1,6 @@
-// import {
-//   handleCursorMove,
-//   handleCursorLeave,
-//   handleCursorEnter,
-// } from "./components/servicesItem.js";
-
-import { useCursor } from "./components/servicesItem";
+import { useCursor, useCursor2 } from "./components/servicesItem";
 
 window.addEventListener("DOMContentLoaded", () => {
-  // const source = document.querySelector("#entry-template");
-  // const template = Handlebars.compile(source);
-  // var context = { title: "Собаке Качалова" };
-  // var html = template(context);
   useCursor();
+  useCursor2();
 });

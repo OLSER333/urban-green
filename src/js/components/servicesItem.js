@@ -89,6 +89,83 @@ export const useCursor = () => {
   // return { handleCursorMove, handleCursorLeave, handleCursorEnter };
 };
 
+export const useCursor2 = () => {
+  const cursorWrapperRef2 = document.querySelector(".cursorWrapperRef2");
+  const cursorScaleWrapperRef2 = document.querySelector(
+    ".cursorScaleWrapperRef2"
+  );
+  const cursorRef2 = document.querySelector(".cursorRef2");
+
+  let requestRef;
+  let coordinates = { x: 0, y: 0 };
+  let withoutAnimation = true;
+
+  // useEffect(() => {
+  let windowWidth = window.innerWidth;
+
+  window.addEventListener("resize", () => {
+    windowWidth = window.innerWidth;
+  });
+
+  const animate = () => {
+    const x = cursorWrapperRef2.getBoundingClientRect().x;
+    const y = cursorWrapperRef2.getBoundingClientRect().y;
+    const diffX = x - coordinates.x;
+    const diffY = y - coordinates.y;
+    const rubberCoef = 10;
+
+    const scale = (Math.abs(diffX) + Math.abs(diffY)) / windowWidth;
+    const deg = Math.atan((y - coordinates.y) / (x - coordinates.x)) * 57;
+
+    const newX = withoutAnimation ? coordinates.x : x - diffX / rubberCoef;
+    const newY = withoutAnimation ? coordinates.y : y - diffY / rubberCoef;
+
+    cursorScaleWrapperRef2.style.transform = `scale(${
+      coordinates.scale ? 0.375 : 1
+    })`;
+
+    cursorWrapperRef2.style.transform = `translate(calc(${newX}px), calc(${newY}px ))`;
+    cursorRef2.style.transform = `rotate(${deg}deg) scaleY(${
+      1 - scale
+    }) scaleX(${1 + scale})`;
+
+    withoutAnimation = false;
+    requestRef = requestAnimationFrame(animate);
+  };
+
+  requestRef = requestAnimationFrame(animate);
+
+  // return () => cancelAnimationFrame(requestRef.current);
+  // }, []);
+
+  const handleCursorMove = (e) => {
+    // console.log(e); // ???
+    const isSticky = e.target.hasAttribute("data-pointer");
+
+    if (isSticky) {
+      coordinates = getCoordinatesOfTargetCenter(e.target);
+    } else {
+      coordinates = { x: e.clientX, y: e.clientY };
+    }
+    cursorWrapperRef2.style.opacity = 1;
+  };
+
+  const handleCursorLeave = () => {
+    cursorWrapperRef2.style.opacity = 0;
+  };
+
+  const handleCursorEnter = () => {
+    withoutAnimation = true;
+  };
+
+  const forMouseOn2 = document.querySelector(".forMouseOn2");
+  forMouseOn2.addEventListener("mouseenter", (e) => handleCursorEnter(e));
+  forMouseOn2.addEventListener("mouseleave", (e) => handleCursorLeave(e));
+  forMouseOn2.addEventListener("mousemove", (e) => handleCursorMove(e));
+
+  // return { handleCursorMove, handleCursorLeave, handleCursorEnter };
+};
+
 //==================================================================
 //==================================================================
 /*
