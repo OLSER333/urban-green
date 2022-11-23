@@ -1,5 +1,7 @@
-// const forMouseOn = document.querySelector('.forMouseOn')
-// forMouseOn.onr
+export const useCursor = () => {
+  const itemsWithCursor = document.querySelectorAll(".forMouseOn");
+  itemsWithCursor.forEach((el) => cursorLogic(el));
+};
 
 const getCoordinatesOfTargetCenter = (target) => {
   const rect = target.getBoundingClientRect();
@@ -12,18 +14,15 @@ const getCoordinatesOfTargetCenter = (target) => {
   };
 };
 
-export const useCursor = () => {
-  const cursorWrapperRef = document.querySelector(".cursorWrapperRef");
-  const cursorScaleWrapperRef = document.querySelector(
-    ".cursorScaleWrapperRef"
-  );
-  const cursorRef = document.querySelector(".cursorRef");
+const cursorLogic = (withCursor) => {
+  const cursorWrapper = withCursor.querySelector(".cursorWrapper");
+  const cursorScaleWrapper = withCursor.querySelector(".cursorScaleWrapper");
+  const cursor = withCursor.querySelector(".cursor");
 
-  let requestRef;
+  let request;
   let coordinates = { x: 0, y: 0 };
   let withoutAnimation = true;
 
-  // useEffect(() => {
   let windowWidth = window.innerWidth;
 
   window.addEventListener("resize", () => {
@@ -31,8 +30,9 @@ export const useCursor = () => {
   });
 
   const animate = () => {
-    const x = cursorWrapperRef.getBoundingClientRect().x;
-    const y = cursorWrapperRef.getBoundingClientRect().y;
+    const x = cursorWrapper.getBoundingClientRect().x;
+    const y = cursorWrapper.getBoundingClientRect().y;
+
     const diffX = x - coordinates.x;
     const diffY = y - coordinates.y;
     const rubberCoef = 10;
@@ -42,91 +42,48 @@ export const useCursor = () => {
 
     const newX = withoutAnimation ? coordinates.x : x - diffX / rubberCoef;
     const newY = withoutAnimation ? coordinates.y : y - diffY / rubberCoef;
+    console.log(newX, newY);
 
-    cursorScaleWrapperRef.style.transform = `scale(${
+    cursorScaleWrapper.style.transform = `scale(${
       coordinates.scale ? 0.375 : 1
     })`;
 
-    cursorWrapperRef.style.transform = `translate(calc(${newX}px), calc(${newY}px ))`;
-    cursorRef.style.transform = `rotate(${deg}deg) scaleY(${
-      1 - scale
-    }) scaleX(${1 + scale})`;
+    cursorWrapper.style.transform = `translate(calc(${newX}px), calc(${newY}px ))`;
+    cursor.style.transform = `rotate(${deg}deg) scaleY(${1 - scale}) scaleX(${
+      1 + scale
+    })`;
 
     withoutAnimation = false;
-    requestRef = requestAnimationFrame(animate);
+    request = requestAnimationFrame(animate);
   };
 
-  requestRef = requestAnimationFrame(animate);
-
-  // return () => cancelAnimationFrame(requestRef.current);
-  // }, []);
-
   const handleCursorMove = (e) => {
-    // console.log(e); // ???
+    console.log("check", e); // ???
     const isSticky = e.target.hasAttribute("data-pointer");
 
     if (isSticky) {
       coordinates = getCoordinatesOfTargetCenter(e.target);
     } else {
-      coordinates = { x: e.clientX, y: e.clientY };
+      if (e.clientX + 150 > document.documentElement.clientWidth) {
+        coordinates = { x: e.clientX - 50, y: e.clientY - 50 };
+      } else {
+        coordinates = { x: e.clientX + 50, y: e.clientY - 50 };
+      }
     }
-    cursorWrapperRef.style.opacity = 1;
+    cursorWrapper.style.opacity = 1;
   };
 
   const handleCursorLeave = () => {
-    cursorWrapperRef.style.opacity = 0;
+    cursorWrapper.style.opacity = 0;
+    cancelAnimationFrame(request);
   };
 
   const handleCursorEnter = () => {
     withoutAnimation = true;
+    request = requestAnimationFrame(animate);
   };
 
-  const forMouseOn = document.querySelector(".forMouseOn");
-  forMouseOn.addEventListener("mouseenter", (e) => handleCursorEnter(e));
-  forMouseOn.addEventListener("mouseleave", (e) => handleCursorLeave(e));
-  forMouseOn.addEventListener("mousemove", (e) => handleCursorMove(e));
-
-  // return { handleCursorMove, handleCursorLeave, handleCursorEnter };
+  withCursor.addEventListener("mouseenter", (e) => handleCursorEnter(e));
+  withCursor.addEventListener("mouseleave", (e) => handleCursorLeave(e));
+  withCursor.addEventListener("mousemove", (e) => handleCursorMove(e));
 };
-
-//==================================================================
-//==================================================================
-/*
-export function hintWork() {
-  const hintW = 100;
-  const hints = document.querySelectorAll(".services__hint");
-
-  const items = document.querySelectorAll(".services__list-item");
-  for (let i = 0; i < items.length; i++) {
-    const hint = hints[i];
-    const item = items[i];
-    item.addEventListener("mouseenter", (e) => {
-      console.log(e);
-      // hint.innerText = this.dataset.description;
-      // hint.style.display = "inline-block";
-      hint.style.transform = `scale(1) translateY(0px) `;
-    });
-    item.addEventListener("mouseleave", () => {
-      hint.style.transform = `scale(0) translateY(-200px) `;
-    });
-    item.addEventListener("mousemove", (e) => {
-      console.log("e", e);
-
-      if (e.pageX + hintW * 1.5 < document.body.offsetWidth) {
-        // hint.style.transform = `translate(${e.pageX + 10}px, ${
-        //   e.pageY + -hintW
-        // }px)`;
-        hint.style.top = e.pageY + -hintW + "px";
-        hint.style.left = e.pageX + 10 + "px";
-      } else {
-        // hint.style.transfrom = `translate(${e.pageY - hintW}px, ${
-        //   e.pageX - hint.offsetWidth - 10
-        // }px)`;
-        hint.style.top = e.pageY - hintW + "px";
-        hint.style.left = e.pageX - hint.offsetWidth - 10 + "px";
-      }
-    });
-  }
-}
-
- */
