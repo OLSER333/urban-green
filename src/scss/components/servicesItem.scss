@@ -20,17 +20,23 @@
 }
 
 .cursor {
-  min-width: 100px;
-  height: 100px;
+  min-width: 270px;
+  height: 270px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: url('../../images/design/hint.png') 0 0 / contain no-repeat;
+  //border: 1px solid rgba(255, 255, 255, 0.4);
+  //background: url('../../images/design/hint.png') 0 0 / contain no-repeat;
   @media (max-width:$tablet-sm-width) {
     display: none;
   }
   @media  (hover:none) {
     display: none;
   }
+}
+
+.cursor-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 

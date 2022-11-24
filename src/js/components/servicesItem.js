@@ -18,6 +18,7 @@ const cursorLogic = (withCursor) => {
   const cursorWrapper = withCursor.querySelector(".cursorWrapper");
   const cursorScaleWrapper = withCursor.querySelector(".cursorScaleWrapper");
   const cursor = withCursor.querySelector(".cursor");
+  const cursorImg = withCursor.querySelector(".cursor-img");
 
   let request;
   let coordinates = { x: 0, y: 0 };
@@ -42,32 +43,29 @@ const cursorLogic = (withCursor) => {
 
     const newX = withoutAnimation ? coordinates.x : x - diffX / rubberCoef;
     const newY = withoutAnimation ? coordinates.y : y - diffY / rubberCoef;
-    console.log(newX, newY);
 
-    cursorScaleWrapper.style.transform = `scale(${
-      coordinates.scale ? 0.375 : 1
-    })`;
+    cursorScaleWrapper.style.transform = `scale(1)`;
 
     cursorWrapper.style.transform = `translate(calc(${newX}px), calc(${newY}px ))`;
     cursor.style.transform = `rotate(${deg}deg) scaleY(${1 - scale}) scaleX(${
       1 + scale
     })`;
+    cursorImg.style.transform = `rotate(${-deg}deg)`;
 
     withoutAnimation = false;
     request = requestAnimationFrame(animate);
   };
 
   const handleCursorMove = (e) => {
-    console.log("check", e); // ???
     const isSticky = e.target.hasAttribute("data-pointer");
 
     if (isSticky) {
       coordinates = getCoordinatesOfTargetCenter(e.target);
     } else {
-      if (e.clientX + 150 > document.documentElement.clientWidth) {
-        coordinates = { x: e.clientX - 50, y: e.clientY - 50 };
+      if (e.clientX + 250 > document.documentElement.clientWidth) {
+        coordinates = { x: e.clientX - 120, y: e.clientY - 100 };
       } else {
-        coordinates = { x: e.clientX + 50, y: e.clientY - 50 };
+        coordinates = { x: e.clientX + 100, y: e.clientY - 100 };
       }
     }
     cursorWrapper.style.opacity = 1;
